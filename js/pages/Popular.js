@@ -20,7 +20,8 @@ import actions from '../action'
 import { createAppContainer } from 'react-navigation'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
 import SafeAreaView from 'react-native-safe-area-view'
-import NavigationUtil from '../navigator/navigatorUtil'
+import PopularItem from '../common/PopularItem'
+
 const URL = `https://api.github.com/search/repositories?q=`,
 QUEYR_STR = `&sort=stars`
     
@@ -80,9 +81,10 @@ class PopularTab extends Component {
   }
   renderItem (data) {
     const item = data.item
-    return <View style={{marginBottom: 10}}>
-      <Text style={{backgroundColor: '#faa'}}>{JSON.stringify(item)}</Text>
-    </View>
+    return <PopularItem
+      item = {item}
+      onSelect = {() => {}}
+    />
   }
   render () {
     const { popular } = this.props

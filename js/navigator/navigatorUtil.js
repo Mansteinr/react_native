@@ -6,8 +6,6 @@ export default class NavigationUtil {
   // 跳转至指定页面
   static goPage (params, page) {
     const navigation = params.navigation
-    console.log(NavigationUtil.navigation)
-    console.log('.navigation')
     if (!navigation) {
       console.log(navigation + 'navigation不能为空')
       return

@@ -610,9 +610,9 @@
                     "from": {
                         "startLines": "1",
                         "startColumns": "4",
-                        "startOffsets": "17",
+                        "startOffsets": "16",
                         "endColumns": "49",
-                        "endOffsets": "62"
+                        "endOffsets": "61"
                     },
                     "to": {
                         "startLines": "668",
@@ -627,10 +627,10 @@
                     "from": {
                         "startLines": "3",
                         "startColumns": "4",
-                        "startOffsets": "57",
+                        "startOffsets": "54",
                         "endLines": "6",
                         "endColumns": "12",
-                        "endOffsets": "237"
+                        "endOffsets": "231"
                     },
                     "to": {
                         "startLines": "792",
