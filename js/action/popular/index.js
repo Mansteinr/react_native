@@ -11,6 +11,7 @@ export function onRefreshPopular(storeName, url, pageSize) {
     // 异步action
     dataStore.fetchData(url).
       then(data => {
+        console.log(data.length)
         handleData(dispatch, storeName, data, pageSize)
       }).catch(err => {
         console.log(err.message)
@@ -25,8 +26,10 @@ export function onRefreshPopular(storeName, url, pageSize) {
 
 //对第一次加载的30条数据进行分拆
 export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = [], callBack) {
+  console.log(storeName, pageIndex, pageSize, dataArray)
   return dispatch => {
     setTimeout(() => { // 模拟网络请求
+      
       if ((pageIndex - 1) * pageSize >= dataArray.length) { // 已经加载完数据
         if (typeof callBack === 'function') {
           callBack('no more')
@@ -41,6 +44,7 @@ export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = []
       } else {
         // 本次加载的最大数量
         let max = pageSize * pageIndex > dataArray.length ? dataArray.length : pageSize * pageIndex
+        
         dispatch({
           type: Types.POPULAR_LOAD_MORE_SUCCESS,
           storeName,
@@ -62,7 +66,6 @@ function handleData(dispatch, storeName, data, pageSize) {
         fixItems = data.data.items;
     }
   }
-  console.log(pageSize > fixItems.length ? fixItems : fixItems.splice(0, pageSize))
   dispatch({
     type: Types.POPULAR_REFRESH_SUCCESS,
     projectModels: pageSize > fixItems.length ? fixItems : fixItems.splice(0, pageSize), // 第一次加载的数据

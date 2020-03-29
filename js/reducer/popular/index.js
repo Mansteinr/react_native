@@ -10,7 +10,6 @@ const defaultState = {
 export default function onAction (state = defaultState, action) {
   switch (action.type) {
     case Types.POPULAR_REFRESH_SUCCESS:
-      console.log(action)
       return {
         ...state,
         [action.storeName]: {
@@ -40,6 +39,7 @@ export default function onAction (state = defaultState, action) {
         }
       }
     case Types.POPULAR_LOAD_MORE_SUCCESS:
+      console.log(action)
       return {
         ...state,
         [action.storeName]: {

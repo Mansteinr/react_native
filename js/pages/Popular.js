@@ -69,6 +69,8 @@ class PopularTab extends Component {
     const { onRefreshPopular, onLoadMorePopular } = this.props
     let url = this.genFetchUrl(this.storeName), store = this._store()
     if (loadMore) {
+      console.log(loadMore, store, pageSize)
+      // return
       onLoadMorePopular(this.storeName, ++store.pageIndex, pageSize, store.items, callback => {
         this.refs.toast.show('没有更多了')
       })
@@ -156,7 +158,7 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch => ({
   onRefreshPopular: (storeName, url, pageSize) => dispatch(actions.onRefreshPopular(storeName, url, pageSize)),
-  onLoadMorePopular: (storeName, pageSize, pageIndex, items, callback) => dispatch(actions.onRefreshPopular(storeName, pageSize, pageIndex, items, callback)),
+  onLoadMorePopular: (storeName, pageSize, pageIndex, items, callback) => dispatch(actions.onLoadMorePopular(storeName, pageSize, pageIndex, items, callback)),
 })
 // connect 只是个function 并不一定要放在export后面
 const PopularTabPage = connect(mapStateToProps, mapDispatchToProps)(PopularTab)
@@ -179,5 +181,12 @@ const styles = StyleSheet.create({
   },
   labelStyle: {
     fontSize: 13
+  },
+  indicatorContainer: {
+    alignItems: "center"
+  },
+  indicator: {
+    color: 'red',
+    margin: 10
   }
 })
