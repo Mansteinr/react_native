@@ -1,17 +1,10 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
   Text,
   FlatList,
+  ActivityIndicator,
   RefreshControl
 } from 'react-native'
 // 关联store和组件
@@ -21,21 +14,22 @@ import { createAppContainer } from 'react-navigation'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
 import SafeAreaView from 'react-native-safe-area-view'
 import PopularItem from '../common/PopularItem'
+import Toast from 'react-native-easy-toast'
 
 const URL = `https://api.github.com/search/repositories?q=`,
 QUEYR_STR = `&sort=stars`
-    
+
 export default class Popular extends Component {
   constructor(props) {
     super(props)
     // 定义顶部 tab
-    this.tabsNames = ['Java', 'JavaScript', 'Adroid', 'React', 'React Native', 'Vue', 'HTML', 'CSS', 'ES6']
+    this.tabsNames = ['Java', 'JavaScript', 'Adroid', 'React', 'ReactNative', 'Vue', 'HTML', 'CSS', 'ES6']
   }
-  _genTabs () {
+  _genTabs() {
     const tabs = {}
     this.tabsNames.forEach((v, k) => {
       tabs[`tab${k}`] = {
-        screen: props => <PopularTabPage {...props} tabLabel={v}/>, // 通过该方法 可以传递参数
+        screen: props => <PopularTabPage {...props} tabLabel={v} />, // 通过该方法 可以传递参数
         navigationOptions: {
           title: v
         }
@@ -43,7 +37,7 @@ export default class Popular extends Component {
     })
     return tabs
   }
-  render () {
+  render() {
     const TabNavigator = createAppContainer(createMaterialTopTabNavigator(this._genTabs(), {
       tabBarOptions: {
         tabStyle: styles.tabStyle,
@@ -56,12 +50,12 @@ export default class Popular extends Component {
         labelStyle: styles.labelStyle // 文字样子
       }
     }))
-    return <SafeAreaView style={{flex: 1}}>
-      <TabNavigator/>
+    return <SafeAreaView style={{ flex: 1 }}>
+      <TabNavigator />
     </SafeAreaView>
   }
 }
-
+const pageSize = 10
 class PopularTab extends Component {
   constructor(props) {
     super(props)
@@ -71,59 +65,100 @@ class PopularTab extends Component {
   componentDidMount() {
     this.loadData()
   }
-  loadData = () => {
-    const { onLoadPopularData } = this.props
-    let url = this.genFetchUrl(this.storeName)
-    onLoadPopularData(this.storeName, url)
+  loadData = (loadMore) => {
+    const { onRefreshPopular, onLoadMorePopular } = this.props
+    let url = this.genFetchUrl(this.storeName), store = this._store()
+    if (loadMore) {
+      onLoadMorePopular(this.storeName, ++store.pageIndex, pageSize, store.items, callback => {
+        this.refs.toast.show('没有更多了')
+      })
+    } else {
+      onRefreshPopular(this.storeName, url, pageSize)
+    }
   }
   genFetchUrl(key) {
     return URL + key + QUEYR_STR
   }
-  renderItem (data) {
+  renderItem(data) {
     const item = data.item
     return <PopularItem
-      item = {item}
-      onSelect = {() => {}}
+      item={item}
+      onSelect={() => { }}
     />
   }
-  render () {
+  _store() {
     const { popular } = this.props
-    let store = popular[this.storeName] // 动态获取state
-    if(!store) {
+    let store = popular[this.storeName]
+    if (!store) {
       store = {
         items: [],
-        isLoading: false
+        isLoading: false,
+        projectModels: [],//要显示的数据
+        hideLoadingMore: true,//默认隐藏加载更多
       }
     }
+    return store
+  }
+  genIndicator() {
+    return this._store().hideLoadingMore ? null :
+      <View style={styles.indicatorContainer}>
+        <ActivityIndicator
+          style={styles.indicator}
+        />
+        <Text>正在加载更多</Text>
+      </View>
+  }
+  render() {
+    let store = this._store()// 动态获取state
+
     return (
       <View style={styles.container}>
         <FlatList
-          data = {store.items}
+          data={store.projectModels}
           renderItem={data => this.renderItem(data)}
-          keyExtractor={item => item.id+''}
+          keyExtractor={item => item.id + ''}
           refreshControl={ //刷新组件
             <RefreshControl
-            title='Loading'
-            titleColor= 'red'
-            colors ={['yellow']}
-            refreshing={store.isLoading} // 显示刷新进度条
-            onRefresh={this.loadData}
-            tintColor='green'
+              title='Loading'
+              titleColor='red'
+              colors={['yellow']}
+              refreshing={store.isLoading} // 显示刷新进度条
+              onRefresh={this.loadData}
+              tintColor='green'
             />
           }
+          onMomentumScrollBegin={() => {
+            // 触犯滚动的时 可以加载更多
+            this.canLoadMore = true; //fix 初始化时页调用onEndReached的问题
+          }}
+          ListFooterComponent={() => this.genIndicator()}
+          onEndReached={() => {
+            // this.loadData(true)
+            setTimeout(() => { // 防止一次加载两个onEndReached
+              if (this.canLoadMore) {//fix 滚动时两次调用onEndReached https://github.com/facebook/react-native/issues/14015
+                this.loadData(true)
+                this.canLoadMore = false
+              }
+            }, 100)
+          }}
+          onEndReachedThreshold={0.5}
         />
+        <Toast ref={'toast'}
+          position={'center'}
+          ></Toast>
       </View>
     )
   }
 }
 
-const mapStateToProps = state =>({
+const mapStateToProps = state => ({
   popular: state.popular //  订阅popular
 })
-const mapDispatchToProps = dispatch =>({
-  onLoadPopularData: (storeName, url) => dispatch(actions.onLoadPopularData(storeName, url))
+const mapDispatchToProps = dispatch => ({
+  onRefreshPopular: (storeName, url, pageSize) => dispatch(actions.onRefreshPopular(storeName, url, pageSize)),
+  onLoadMorePopular: (storeName, pageSize, pageIndex, items, callback) => dispatch(actions.onRefreshPopular(storeName, pageSize, pageIndex, items, callback)),
 })
-
+// connect 只是个function 并不一定要放在export后面
 const PopularTabPage = connect(mapStateToProps, mapDispatchToProps)(PopularTab)
 
 const styles = StyleSheet.create({

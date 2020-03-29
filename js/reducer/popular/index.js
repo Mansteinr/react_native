@@ -1,4 +1,5 @@
 import Types from '../../actionTypes'
+import { act } from 'react-test-renderer'
 const defaultState = {
 }
 /**
@@ -8,29 +9,53 @@ const defaultState = {
  */
 export default function onAction (state = defaultState, action) {
   switch (action.type) {
-    case Types.LOAD_POPULAR_SUCCESS:
+    case Types.POPULAR_REFRESH_SUCCESS:
+      console.log(action)
       return {
         ...state,
         [action.storeName]: {
           ...state[action.storeName],
+          projectModels: action.projectModels,
           items: action.items,
-          isLoading: false
+          isLoading: false,
+          hideLoadingMore: false,
+          pageIndex: action.pageIndex
         }
       }
-    case Types.LOAD_POPULAR_REFRESH:
+    case Types.POPULAR_REFRESH:
       return {
         ...state,
         [action.storeName]: {
           ...state[action.storeName],
-          isLoading: true
+          isLoading: true,
+          hideLoadingMore: true, // 第一次刷新的时候 不需要加载更多
         }
       }
-    case Types.LOAD_POPULAR_FAIL:
+    case Types.POPULAR_REFRESH_FAIL:
       return {
         ...state,
         [action.storeName]: {
           ...state[action.storeName],
           isLoading: false
+        }
+      }
+    case Types.POPULAR_LOAD_MORE_SUCCESS:
+      return {
+        ...state,
+        [action.storeName]: {
+          ...state[action.storeName],
+          projectModels: action.projectModels,
+          hideLoadingMore: false,
+          pageIndex: action.pageIndex
+        }
+      }
+    case Types.POPULAR_LOAD_MORE_FAIL:
+      return {
+        ...state,
+        [action.storeName]: {
+          ...state[action.storeName],
+          hideLoadingMore: true,
+          pageIndex: action.pageIndex
         }
       }
     default:

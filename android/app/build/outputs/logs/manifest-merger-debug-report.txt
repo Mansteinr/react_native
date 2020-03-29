@@ -11,6 +11,7 @@ MERGED from [:react-native-community_masked-view] D:\react_native\node_modules\@
 MERGED from [:react-native-reanimated] D:\react_native\node_modules\react-native-reanimated\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-safe-area-context] D:\react_native\node_modules\react-native-safe-area-context\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-screens] D:\react_native\node_modules\react-native-screens\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
+MERGED from [:react-native-splash-screen] D:\react_native\node_modules\react-native-splash-screen\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-14:12
 MERGED from [com.facebook.react:react-native:0.61.5] C:\Users\zhoumingye\.gradle\caches\transforms-2\files-2.1\9adae85d82400b80933f6c4656e75d80\AndroidManifest.xml:2:1-13:12
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\zhoumingye\.gradle\caches\transforms-2\files-2.1\b99e1ae3e7cf8659f5075de2816773d0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.appcompat:appcompat:1.1.0] C:\Users\zhoumingye\.gradle\caches\transforms-2\files-2.1\047636404cf7c0d2d79e81243e0e658a\AndroidManifest.xml:17:1-24:12
@@ -78,6 +79,8 @@ application
 ADDED from D:\react_native\android\app\src\main\AndroidManifest.xml:6:5-24:19
 MERGED from D:\react_native\android\app\src\main\AndroidManifest.xml:6:5-24:19
 MERGED from D:\react_native\android\app\src\main\AndroidManifest.xml:6:5-24:19
+MERGED from [:react-native-splash-screen] D:\react_native\node_modules\react-native-splash-screen\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:5-12:19
+MERGED from [:react-native-splash-screen] D:\react_native\node_modules\react-native-splash-screen\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:5-12:19
 MERGED from [com.facebook.react:react-native:0.61.5] C:\Users\zhoumingye\.gradle\caches\transforms-2\files-2.1\9adae85d82400b80933f6c4656e75d80\AndroidManifest.xml:11:5-20
 MERGED from [com.facebook.react:react-native:0.61.5] C:\Users\zhoumingye\.gradle\caches\transforms-2\files-2.1\9adae85d82400b80933f6c4656e75d80\AndroidManifest.xml:11:5-20
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\zhoumingye\.gradle\caches\transforms-2\files-2.1\b99e1ae3e7cf8659f5075de2816773d0\AndroidManifest.xml:22:5-20
@@ -154,6 +157,8 @@ MERGED from [:react-native-safe-area-context] D:\react_native\node_modules\react
 MERGED from [:react-native-safe-area-context] D:\react_native\node_modules\react-native-safe-area-context\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-screens] D:\react_native\node_modules\react-native-screens\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-screens] D:\react_native\node_modules\react-native-screens\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-splash-screen] D:\react_native\node_modules\react-native-splash-screen\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-splash-screen] D:\react_native\node_modules\react-native-splash-screen\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.react:react-native:0.61.5] C:\Users\zhoumingye\.gradle\caches\transforms-2\files-2.1\9adae85d82400b80933f6c4656e75d80\AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.react:react-native:0.61.5] C:\Users\zhoumingye\.gradle\caches\transforms-2\files-2.1\9adae85d82400b80933f6c4656e75d80\AndroidManifest.xml:7:5-9:41
 MERGED from [com.google.android.material:material:1.1.0] C:\Users\zhoumingye\.gradle\caches\transforms-2\files-2.1\b99e1ae3e7cf8659f5075de2816773d0\AndroidManifest.xml:20:5-44
