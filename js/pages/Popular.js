@@ -4,7 +4,7 @@ import {
   View,
   Text,
   FlatList,
-  ActivityIndicator,
+  ActivityIndicator, //圆形进度条
   RefreshControl
 } from 'react-native'
 // 关联store和组件

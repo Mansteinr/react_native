@@ -39,7 +39,7 @@ export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = []
           error: 'no more',
           storeName: storeName,
           pageSize: --pageIndex,
-          projectModes: dataArray
+          projectModels: dataArray
         })
       } else {
         // 本次加载的最大数量
