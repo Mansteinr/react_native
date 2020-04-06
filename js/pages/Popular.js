@@ -14,10 +14,12 @@ import { createAppContainer } from 'react-navigation'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
 import SafeAreaView from 'react-native-safe-area-view'
 import PopularItem from '../common/PopularItem'
+import NavigationBar from '../common/NavigationBar'
 import Toast from 'react-native-easy-toast'
 
 const URL = `https://api.github.com/search/repositories?q=`,
-QUEYR_STR = `&sort=stars`
+  QUEYR_STR = `&sort=stars`,
+  THEME_COLOR = '#678'
 
 export default class Popular extends Component {
   constructor(props) {
@@ -37,7 +39,16 @@ export default class Popular extends Component {
     })
     return tabs
   }
-  render() {
+  render () {
+    let statusBar = {
+      backgroundColor: THEME_COLOR,
+      barStyle: 'light-content'
+    }
+    let navigationBar = <NavigationBar
+      title="最热"
+      statusBar={statusBar}
+      style={{ backgroundColor: THEME_COLOR}}
+    />
     const TabNavigator = createAppContainer(createMaterialTopTabNavigator(this._genTabs(), {
       tabBarOptions: {
         tabStyle: styles.tabStyle,
@@ -51,6 +62,7 @@ export default class Popular extends Component {
       }
     }))
     return <SafeAreaView style={{ flex: 1 }}>
+      { navigationBar }
       <TabNavigator />
     </SafeAreaView>
   }
@@ -122,7 +134,7 @@ class PopularTab extends Component {
           refreshControl={ //刷新组件
             <RefreshControl
               title='Loading'
-              titleColor='red'
+              titleColor={ THEME_COLOR }
               colors={['yellow']}
               refreshing={store.isLoading} // 显示刷新进度条
               onRefresh={this.loadData}

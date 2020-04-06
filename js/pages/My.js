@@ -10,83 +10,66 @@ import React, {Component} from 'react'
 import {
   StyleSheet,
   View,
-  Text
+  Text,
+  TouchableOpacity
 } from 'react-native'
-import { createAppContainer } from 'react-navigation'
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
 import SafeAreaView from 'react-native-safe-area-view'
-import NavigationUtil from '../navigator/navigatorUtil'
+import NavigationBar from '../common/NavigationBar'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import Feather from 'react-native-vector-icons/Feather'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
-export default class Popular extends Component {
-  constructor(props) {
-    super(props)
-    // 定义顶部 tab
-    this.tabsNames = ['Java', 'JavaScript', 'Adroid', 'React', 'React Native', 'Vue', 'HTML', 'CSS', 'ES6']
+const THEME_COLOR = '#678'
+
+export default class My extends Component {
+  getRightButton () {
+    return <View style={{ flexDirection: 'row'}}>
+      <TouchableOpacity onPress={() => { }}>
+        <View style={{ padding: 5, marginRight: 8}}>
+          <Feather
+            name={'search'}
+            size={24}
+            style={{color: 'white'}}
+          ></Feather>
+        </View>
+      </TouchableOpacity>
+
+    </View>
   }
-  _genTabs () {
-    const tabs = {};
-    this.tabsNames.forEach((v, k) => {
-      tabs[`tab${k}`] = {
-        screen: props => <PopularTab {...props} tabLabel={v}/>, // 通过该方法 可以传递参数
-        navigationOptions: {
-          title: v
-        }
-      }
-    })
-    return tabs
+  getLeftButton (callback) {
+    return <TouchableOpacity
+      style={{ padding : 8, paddingLeft: 12}}
+      onPress={callback}>
+        <View>
+          <Ionicons
+          name={'ios-arrow-back'}
+          size={26}
+          style={{color: 'white'}}
+          ></Ionicons>
+        </View>
+      </TouchableOpacity>
   }
+
   render () {
-    const TabNavigator = createAppContainer(createMaterialTopTabNavigator(this._genTabs(), {
-      tabBarOptions: {
-        tabStyle: styles.tabStyle,
-        upperCaseLabel: false, // 不设置的花都是大写
-        scrollEnabled: true, // 可以滚动
-        style: { //  选项卡 背景色
-          backgroundColor: '#678'
-        },
-        indicatorStyle: styles.indicatorStyle,
-        labelStyle: styles.labelStyle // 文字样子
-      }
-    }))
-    return <SafeAreaView style={{flex: 1}}>
-      <TabNavigator/>
+    let statusBar = {
+      backgroundColor: THEME_COLOR,
+      barStyle: 'light-content'
+    }
+    let navigationBar = <NavigationBar
+      title="我的"
+      statusBar={statusBar}
+      style={{ backgroundColor: THEME_COLOR }}
+      leftButton = { this.getLeftButton() }
+      rightButton = { this.getRightButton() }
+    />
+    
+    return <SafeAreaView style={{ flex: 1 }}>
+      {navigationBar}
+      <Text style={styles.welcome}>MyPage</Text>
     </SafeAreaView>
   }
 }
 
-class PopularTab extends Component {
-  render () {
-    const { tabLabel } = this.props
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}> {tabLabel}</Text>
-        <Text onPress={() => {
-          // 这样的waic点击没有效果 应该多层navigator嵌套导致的 
-          // 最内层的nivigator无法跳转至最外层navigator所定义的页面
-          // 可以外层navigator 用该外曾navigator跳转
-          NavigationUtil.goPage({
-            navigation: NavigationUtil.navigation
-          }, 'Detail')
-        }} style={styles.welcome}> 跳转至详情页 </Text>
-        <Text onPress={() => {
-          NavigationUtil.goPage({
-            navigation: NavigationUtil.navigation
-          }, 'FetchDemo')
-        }} style={styles.welcome}> 跳转至详FetchDemo </Text>
-        <Text onPress={() => {
-          NavigationUtil.goPage({
-            navigation: NavigationUtil.navigation
-          }, 'AsyncStorageDemo')
-        }} style={styles.welcome}> 跳转至详AsyncStorage </Text>
-        <Text onPress={() => {
-          NavigationUtil.goPage({
-            navigation: NavigationUtil.navigation
-          }, 'DataStorage')
-        }} style={styles.welcome}> 跳转至详DataStorage </Text>
-      </View>
-    )
-  }
-}
 
 const styles = StyleSheet.create({
   container: {

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\react_native\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-lo\\values-lo.xml",
+            "outputFile": "F:\\code\\react_native\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-lo\\values-lo.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\zhoumingye\\.gradle\\caches\\transforms-2\\files-2.1\\047636404cf7c0d2d79e81243e0e658a\\res\\values-lo\\values-lo.xml",
+                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-2\\files-2.1\\a7e2ac16ad6618159f9341c9aa58bab5\\res\\values-lo\\values-lo.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\zhoumingye\\.gradle\\caches\\transforms-2\\files-2.1\\5196b85b1efdd693ea29e7ae94bd20f8\\res\\values-lo\\values-lo.xml",
+                    "source": "C:\\Users\\asus\\.gradle\\caches\\transforms-2\\files-2.1\\fa4d637d9240128f584b23b27051cc33\\res\\values-lo\\values-lo.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
