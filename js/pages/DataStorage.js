@@ -5,7 +5,7 @@
  * @format
  * @flow
  */
-import localStorage from '../common/utils'
+import { localStorage } from '../common/utils'
 import React, {Component} from 'react'
 import {
   StyleSheet,

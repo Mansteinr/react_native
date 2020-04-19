@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import MaterialIcons from 'react-native-vector-icons'
 import {
   StyleSheet,
   View,
@@ -10,13 +11,15 @@ import {
 // 关联store和组件
 import { connect } from 'react-redux'
 import actions from '../action'
-import { createAppContainer } from 'react-navigation'
+import { createAppContainer, TouchableOpacity } from 'react-navigation'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
 import SafeAreaView from 'react-native-safe-area-view'
 import TrendingItem from '../common/TrendingItem'
 import NavigationBar from '../common/NavigationBar'
 import Toast from 'react-native-easy-toast'
-console.log(TrendingItem, 'TrendingItemTrendingItemTrendingItem')
+import TrendingDialog from '../common/TrendingDialog'
+import { TimeSpans } from '../common/utils'
+
 const URL = 'https://github.com/trending/',
   QUEYR_STR = `?since=daily`,
   THEME_COLOR = '#678'
@@ -25,7 +28,11 @@ export default class Trending extends Component {
   constructor(props) {
     super(props)
     // 定义顶部 tab
-    this.tabsNames = [ 'Java', 'JavaScript', 'Adroid', 'React', 'ReactNative', 'Vue', 'HTML', 'CSS', 'ES6']
+    this.tabsNames = ['Java', 'JavaScript', 'Adroid', 'React', 'ReactNative', 'Vue', 'HTML', 'CSS', 'ES6']
+    
+    this.state = {
+      timeSpan: TimeSpans[0]
+    }
   }
   _genTabs() {
     const tabs = {}
@@ -39,6 +46,41 @@ export default class Trending extends Component {
     })
     return tabs
   }
+  renderTitleView = () => {
+    return <View>
+      <TouchableOpacity
+        underlayColor="transparent"
+        onPress={() => {
+          this.dialog.show()
+        }}
+      >
+        <View style={{
+
+          fontSize: 18,
+          color: '#fff',
+          fontWeight: '400'
+        }}>
+          趋势 {this.state.timeSpan.showText}
+          <MaterialIcons
+            name={"arrow-drop-up"}
+            size={36}
+          />
+        </View>
+      </TouchableOpacity>
+    </View>
+  }
+  onSelectTimeSpan (tab) {
+    this.dialog.dismiss()
+    this.setState({
+      timeSpan: tab
+    })
+  }
+  renderTrendingDialog = () => {
+    return <TrendingDialog
+      ref={dialog => this.dialog = dialog}
+      onSelect={ tab => this.onSelectTimeSpan(tab) }
+    ></TrendingDialog>
+  }
   render () {
     let statusBar = {
       backgroundColor: THEME_COLOR,
@@ -46,6 +88,7 @@ export default class Trending extends Component {
     }
     let navigationBar = <NavigationBar
       title="趋势"
+      titleView={ this.renderTitleView() }
       statusBar={statusBar}
       style={{ backgroundColor: THEME_COLOR}}
     />
@@ -64,6 +107,7 @@ export default class Trending extends Component {
     return <SafeAreaView style={{ flex: 1 }}>
       { navigationBar }
       <TabNavigator />
+      { this.renderTrendingDialog() }
     </SafeAreaView>
   }
 }
@@ -202,5 +246,11 @@ const styles = StyleSheet.create({
   indicator: {
     color: 'red',
     margin: 10
-  }
+  },
+  arrow: {
+    marginTop: 40,
+    color: 'white',
+    padding: 0,
+    margin: -15,
+  },
 })

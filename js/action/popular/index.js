@@ -1,6 +1,6 @@
 import Types from '../../actionTypes'
 import { handleData } from '../actionUtils'
-import localStorage, { FLAG_STORAGE } from '../../common/utils'
+import { localStorage ,FLAG_STORAGE } from '../../common/utils'
 // 获取最热数据的异步action 异步action 需要配置redux-thunk 否则不能发动异步请求
 export function onRefreshPopular(storeName, url, pageSize) {
   return dispatch => {

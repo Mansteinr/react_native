@@ -4,7 +4,7 @@ import Trending from 'gitreactnativeplugin'
 // 操作标识符 popular和trending模块数据处理不一样 所以用标识符以示区别
 export const FLAG_STORAGE = { flag_popular: 'popular', flag_trending: 'trending' }
 
-export default class localStorage {
+export class localStorage {
 
   /**
    * 保存数据
@@ -115,4 +115,9 @@ export default class localStorage {
 
     return true
   }
+}
+
+export const TimeSpan = (showText, searchText) => {
+  this.showText = showText
+  this.searchText = searchText
 }
