@@ -1127,11 +1127,6 @@
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
-GitHubTrending@^3.1.6:
-  version "3.1.6"
-  resolved "https://registry.npm.taobao.org/GitHubTrending/download/GitHubTrending-3.1.6.tgz#5b2ac92a0f59b103e2c0f85af1863d1b57190e6d"
-  integrity sha1-WyrJKg9ZsQPiwPha8YY9G1cZDm0=
-
 abab@^2.0.0:
   version "2.0.3"
   resolved "https://registry.npm.taobao.org/abab/download/abab-2.0.3.tgz#623e2075e02eb2d3f2475e49f99c91846467907a"
@@ -2995,6 +2990,11 @@ getpass@^0.1.1:
   integrity sha1-Xv+OPmhNVprkyysSgmBOi6YhSfo=
   dependencies:
     assert-plus "^1.0.0"
+
+gitreactnativeplugin@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/gitreactnativeplugin/download/gitreactnativeplugin-1.0.0.tgz#ee432e6b5ed072ec49ed8f8c41663c9a92a86f1c"
+  integrity sha1-7kMua17QcuxJ7Y+MQWY8mpKobxw=
 
 glob-parent@^5.0.0:
   version "5.1.1"

@@ -1,5 +1,4 @@
 import Types from '../../actionTypes'
-import { act } from 'react-test-renderer'
 const defaultState = {
 }
 /**

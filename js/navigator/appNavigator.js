@@ -1,6 +1,7 @@
 import {
   createStackNavigator
 } from 'react-navigation-stack'
+import { DeviceInfo } from 'react-native'
 import {
   createBottomTabNavigator,
   createMaterialTopTabNavigator

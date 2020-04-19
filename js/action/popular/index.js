@@ -1,5 +1,6 @@
 import Types from '../../actionTypes'
-import localStorage from '../../common/utils'
+import { handleData } from '../actionUtils'
+import localStorage, { FLAG_STORAGE } from '../../common/utils'
 // 获取最热数据的异步action 异步action 需要配置redux-thunk 否则不能发动异步请求
 export function onRefreshPopular(storeName, url, pageSize) {
   return dispatch => {
@@ -9,10 +10,9 @@ export function onRefreshPopular(storeName, url, pageSize) {
     })
     let dataStore = new localStorage()
     // 异步action
-    dataStore.fetchData(url).
+    dataStore.fetchData(url, FLAG_STORAGE.flag_popular).
       then(data => {
-        console.log(data.length)
-        handleData(dispatch, storeName, data, pageSize)
+        handleData(Types.POPULAR_REFRESH_SUCCESS, dispatch, storeName, data, pageSize)
       }).catch(err => {
         console.log(err.message)
         dispatch({
@@ -54,23 +54,4 @@ export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = []
       }
     }, 500)
   }
-}
-
-// 处理返回的数据
-function handleData(dispatch, storeName, data, pageSize) {
-  let fixItems = []
-  if (data && data.data) {
-    if (Array.isArray(data.data)) {
-      fixItems = data.data;
-    } else if (Array.isArray(data.data.items)) {
-        fixItems = data.data.items;
-    }
-  }
-  dispatch({
-    type: Types.POPULAR_REFRESH_SUCCESS,
-    projectModels: pageSize > fixItems.length ? fixItems : fixItems.splice(0, pageSize), // 第一次加载的数据
-    storeName,
-    items: fixItems,
-    pageIndex: 1
-  })
 }

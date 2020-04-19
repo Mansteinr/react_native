@@ -16,7 +16,7 @@ import SafeAreaView from 'react-native-safe-area-view'
 import PopularItem from '../common/PopularItem'
 import NavigationBar from '../common/NavigationBar'
 import Toast from 'react-native-easy-toast'
-
+import { DeviceInfo } from 'react-native'
 const URL = `https://api.github.com/search/repositories?q=`,
   QUEYR_STR = `&sort=stars`,
   THEME_COLOR = '#678'
@@ -53,7 +53,7 @@ export default class Popular extends Component {
       tabBarOptions: {
         tabStyle: styles.tabStyle,
         upperCaseLabel: false, // 不设置的花都是大写
-        scrollEnabled: true, // 可以滚动
+        scrollEnabled: true, // 可以滚动 安卓是会导致tabBar高度异常 所以在style设置高度为30
         style: { //  选项卡 背景色
           backgroundColor: '#678'
         },
@@ -61,7 +61,7 @@ export default class Popular extends Component {
         labelStyle: styles.labelStyle // 文字样子
       }
     }))
-    return <SafeAreaView style={{ flex: 1 }}>
+    return <SafeAreaView style={{ flex: 1, marginTop: DeviceInfo.isIPhonex_deprecated ? 30 : 0 }}>
       { navigationBar }
       <TabNavigator />
     </SafeAreaView>
@@ -185,14 +185,16 @@ const styles = StyleSheet.create({
     margin: 10
   },
   tabStyle: {
-    minWidth: 30
+    padding: 0
+    // minWidth: 30 //  minWidth 会导致tabStyle初次加载时闪烁
   },
   indicatorStyle: {
     height: 2,
     backgroundColor: '#fff'
   },
   labelStyle: {
-    fontSize: 13
+    fontSize: 13,
+    margin: 0
   },
   indicatorContainer: {
     alignItems: "center"

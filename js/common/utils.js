@@ -1,7 +1,11 @@
 import React from 'react'
 import {  AsyncStorage } from 'react-native'
+import Trending from 'gitreactnativeplugin'
+// 操作标识符 popular和trending模块数据处理不一样 所以用标识符以示区别
+export const FLAG_STORAGE = { flag_popular: 'popular', flag_trending: 'trending' }
 
 export default class localStorage {
+
   /**
    * 保存数据
    */
@@ -9,8 +13,10 @@ export default class localStorage {
     AsyncStorage.setItem(url, JSON.stringify(this._wrapData(data)), callback)
   }
  
-
   // 获取数据
+  /**
+   *  是标识符 因为popluar和trending数据结构不一样  故穿个标识符 以示区别
+   */
   fetchLocalData(url) {
     return new Promise((resolve, reject) => {
       AsyncStorage.getItem(url, (error, result) => {
@@ -27,16 +33,14 @@ export default class localStorage {
     })
   }
 
- 
-
-
   /**
    * 获取网络数据
    */
-
-  fetchNetData(url) {
+  fetchNetData(url, flag) {
+    console.log(url, flag, 'fetchNetData')
     return new Promise((resolve, reject) => {
-      fetch(url)
+      if (flag !== FLAG_STORAGE.flag_trending) {
+        fetch(url)
         .then(response => {
           if(response.ok) {
             return response.json()
@@ -50,6 +54,21 @@ export default class localStorage {
         .catch(error => {
           reject(error)
         })
+      } else {
+        new Trending().fetchTrending(url)
+          .then(items => {
+            console.log(items, 'Trending')
+            if (!items) {
+              throw new Error('出差了')
+            }
+            console.log(url)
+            this.saveData(url, items)
+            resolve(items)
+          }).catch(err => {
+            console.log(err, 'Trending')
+          reject(err)
+        })
+      }
     })
   }
 
@@ -58,22 +77,20 @@ export default class localStorage {
    * 
    * 获取数据 优先获取本地数据 如果无本地数据或者本地数据过期则获取网络数据
    */
-
-
-  fetchData(url) {
+  fetchData(url, flag) {
     return new Promise((resolve, reject) => {
-      this.fetchLocalData(url).then(wrapData => {
+      this.fetchLocalData(url, flag).then(wrapData => {
         if(wrapData && DataStore.checkTimestampValid(wrapData.timestamp)) {
           resolve(wrapData)
         } else {
-          this.fetchNetData(url).then(res => {
+          this.fetchNetData(url, flag).then(res => {
             resolve(this._wrapData(res))
           }).catch(error => {
             reject(error.message)
           })
         }
       }).catch(error => {
-        this.fetchNetData(url).then(res => {
+        this.fetchNetData(url, flag).then(res => {
           resolve(this._wrapData(res))
         }).catch(error => {
           reject(error.message)

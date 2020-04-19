@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.7",
-    "GitHubTrending": "^3.1.6",
+    "gitreactnativeplugin": "^1.0.0",
     "persist": "^0.2.7",
     "prop-types": "^15.7.2",
     "react": "16.9.0",
